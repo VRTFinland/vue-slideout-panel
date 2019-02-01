@@ -51,6 +51,7 @@ const vm = {
       this.closePanel(currentPanel, data);
     },
     closePanel(panel, data) {
+      console.log("closePanel", panel, data);
       if (!panel) throw new Error('panel');
 
       eventBus.$emit(`hideSlideOutPanel-${panel.id}`, {
