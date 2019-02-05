@@ -163,14 +163,15 @@ const vm = {
       domUtils.removeClass(document.body, 'slideout-panel-open');
     },
     onBgClicked() {
-      const currentPanel = this.panels[this.panels.length - 1];
+      const currentPanel = currentlyOpenPanel || this.panels[this.panels.length - 1];
 
       if (currentPanel.disableBgClick) return;
 
       this.closeCurrentPanel();
     },
     onEscapeKeypress(e) {
-      if (e.keyCode === 27) {
+      const currentPanel = currentlyOpenPanel || this.panels[this.panels.length - 1];
+      if (e.keyCode === 27 && !currentPanel.disableEscKey) {
         this.closeCurrentPanel();
       }
     }
