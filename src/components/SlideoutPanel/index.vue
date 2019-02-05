@@ -13,6 +13,8 @@ function isString(val) {
   return typeof val === 'string';
 }
 
+let currentlyOpenPanel = null;
+
 const vm = {
   name: 'slideout-panel',
   components: {},
@@ -46,7 +48,10 @@ const vm = {
     closeCurrentPanel(data) {
       if (!this.panels || !this.panels.length) return;
 
-      const currentPanel = this.panels[this.panels.length - 1];
+      let currentPanel = currentlyOpenPanel;
+      if(!currentPanel) {
+          currentPanel = this.panels[this.panels.length - 1];
+      }
 
       this.closePanel(currentPanel, data);
     },
@@ -63,6 +68,8 @@ const vm = {
       if (!this.panelsVisible) {
         this.removeBodyClass();
       }
+
+      currentlyOpenPanel = null;
 
       setTimeout(() => {
         if (!panel.keepAlive) {
@@ -109,6 +116,7 @@ const vm = {
       }
 
       this.addBodyClass();
+      currentlyOpenPanel = panel;
     },
     onHideSlideOutPanel(panel) {
       this.closeCurrentPanel(panel);
